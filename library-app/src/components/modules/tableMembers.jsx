@@ -3,7 +3,7 @@ import TableMemberRow from '../widgets/tableMemberRow';
 import { useNavigate } from 'react-router-dom';
 
 
-const TableMembers = ({ members, onEdit, onDelete,onDetail, columns }) => {
+const TableMembers = ({ members, onEdit, onDelete, columns }) => {
     const navigate = useNavigate();
     return (
         <>
@@ -20,7 +20,6 @@ const TableMembers = ({ members, onEdit, onDelete,onDetail, columns }) => {
                             }}
                             onDelete={() => onDelete(member.id)}
                             onDetail={() => {
-                                onDetail(member.id)
                                 navigate(`/members/${member.id}`)
                             }}
                         />

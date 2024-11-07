@@ -56,21 +56,9 @@ const AppRouter = () => {
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [selectedBookIndex, setSelectedBookIndex] = useState(null);
     const [editingBook, setEditingBook] = useState(null);
-    const [detailBook, setDetailBook] = useState(null);
-    const [detailMember, setDetailMember] = useState(null);
     const [selectedMemberId, setSelectedMemberId] = useState(null);
     const [editingMember, setEditingMember] = useState(null);
     const [errors,setErrors]= useState(null);
-
-    const handleDetailBook = (index) => {
-        const bookDetail = books[index];
-        setDetailBook(bookDetail);
-    };
-
-    const handleDetailMember = (index) => {
-        const memberDetail = members[index];
-        setDetailMember(memberDetail);
-    };
 
     const handleEditBook = (index) => {
         setIsFormOpen(false);
@@ -296,7 +284,6 @@ const AppRouter = () => {
                             books={books}
                             onEdit={handleEditBook}
                             onDelete={handleDeleteBook}
-                            onDetail={handleDetailBook}
                             columns={columnsTableBooks}
                         />
                     )
@@ -344,7 +331,6 @@ const AppRouter = () => {
                             members={members}
                             onEdit={handleEditMember}
                             onDelete={handleDeleteMember}
-                            onDetail={handleDetailMember}
                             columns={columnsTableMembers}
                         />
                     )

@@ -2,7 +2,7 @@ import TableHeader from '../widgets/tableHeader';
 import TableBooksRow from '../widgets/tableBookRow';
 import { useNavigate } from 'react-router-dom';
 
-const TableBooks = ({ books, onEdit, onDelete, onDetail, columns }) => {
+const TableBooks = ({ books, onEdit, onDelete, columns }) => {
     const navigate = useNavigate();
     return (
         <>
@@ -19,7 +19,6 @@ const TableBooks = ({ books, onEdit, onDelete, onDetail, columns }) => {
                             }}
                             onDelete={() => onDelete(index)}
                             onDetail={() => {
-                                onDetail(index)
                                 navigate(`/books/${index}`)
                             }}
                         />
