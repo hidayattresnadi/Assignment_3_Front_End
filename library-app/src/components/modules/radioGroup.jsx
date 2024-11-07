@@ -2,7 +2,7 @@ import Container from '../elements/container';
 import RadioOption from '../widgets/radionOptions';
 
 const RadioGroup = ({ options, name, selectedValue, onChange }) => (
-    <Container className='d-flex'>
+    <Container style={{marginTop:'50px', marginBottom:'20px'}} className='d-flex'>
         <h5 className='me-4'>Please Select Gender:</h5>
         {options.map(option => (
             <RadioOption 

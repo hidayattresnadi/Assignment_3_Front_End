@@ -3,10 +3,10 @@ import Header from "../modules/headerSection";
 import { Outlet } from "react-router-dom";
 
 
-const Layout = () => {
+const Layout = ({setEditingBook, setEditingMember, setErrors}) => {
     return (
         <>
-            <Header />
+            <Header setEditingBook={setEditingBook} setEditingMember={setEditingMember} setErrors={setErrors} />
             <Outlet />
             <Footer />
         </>

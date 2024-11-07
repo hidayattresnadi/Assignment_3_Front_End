@@ -1,7 +1,7 @@
 import MemberForm from '../modules/memberForm'
 import FormLayout from '../templates/FormLayout';
 
-function MemberFormPage({ addMember, updateMember, editingMember, isFormOpen, setIsFormOpen }) {
+function MemberFormPage({ addMember, updateMember, editingMember, isFormOpen, setIsFormOpen, errors }) {
     return (
         <FormLayout title={editingMember ? "Form to Update Member" : "Form to Add Member"}>
             <MemberForm 
@@ -9,7 +9,8 @@ function MemberFormPage({ addMember, updateMember, editingMember, isFormOpen, se
                 updateMember={updateMember} 
                 editingMember={editingMember}  
                 isFormOpen={isFormOpen} 
-                setIsFormOpen={setIsFormOpen} 
+                setIsFormOpen={setIsFormOpen}
+                errors={errors} 
             />
         </FormLayout>
     )

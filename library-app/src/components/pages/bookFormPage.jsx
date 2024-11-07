@@ -1,7 +1,7 @@
 import Form from '../modules/bookForm'
 import FormLayout from '../templates/FormLayout';
 
-function BookFormPage({ addBook, updateBook, editingBook, categories, isFormOpen, setIsFormOpen, errors }) {
+function BookFormPage({ addBook, updateBook, editingBook, categories, isFormOpen, setIsFormOpen,errors={errors}  }) {
     return (
         <FormLayout title={editingBook ? "Form to Update Book" : "Form to Add Book"}>
             <Form 
@@ -11,7 +11,7 @@ function BookFormPage({ addBook, updateBook, editingBook, categories, isFormOpen
                 categories={categories} 
                 isFormOpen={isFormOpen} 
                 setIsFormOpen={setIsFormOpen}
-                errors = {errors} 
+                errors={errors}
             />
         </FormLayout>
     )

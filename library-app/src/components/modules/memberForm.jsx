@@ -3,8 +3,9 @@ import InputField from '../widgets/inputField';
 import Button from '../elements/button';
 import { useNavigate } from 'react-router-dom';
 import RadioGroup from './radioGroup';
+import LabeledTextArea from '../widgets/labeledTextArea';
 
-const MemberForm = ({ addMember, updateMember, editingMember, isFormOpen, setIsFormOpen }) => {
+const MemberForm = ({ addMember, updateMember, editingMember, isFormOpen, setIsFormOpen, errors }) => {
     const navigate = useNavigate();
     const fullNameInputRef = useRef();
     const [formData, setFormData] = useState({
@@ -42,7 +43,7 @@ const MemberForm = ({ addMember, updateMember, editingMember, isFormOpen, setIsF
     }, [isFormOpen]);
 
     const handleInputChange = (e) => {
-        const { id, name ,value, type, checked } = e.target;
+        const { id, name, value, type, checked } = e.target;
         setFormData({
             ...formData,
             [type === "radio" ? name : id]: type === "checkbox" ? checked : value
@@ -53,20 +54,31 @@ const MemberForm = ({ addMember, updateMember, editingMember, isFormOpen, setIsF
         e.preventDefault();
 
         if (editingMember) {
-            updateMember(formData);
-            navigate('/members')
+            const result = updateMember(formData);
+            if(Object.keys(result).length === 0){
+                navigate('/members');
+                setFormData({
+                    fullName: '',
+                    email: '',
+                    gender: '',
+                    address: '',
+                    phone: ''
+                });
+                setIsFormOpen(false);
+            }
         } else {
-            addMember(formData);
+            const result = addMember(formData);
+            if(Object.keys(result).length === 0){
+                setFormData({
+                    fullName: '',
+                    email: '',
+                    gender: '',
+                    address: '',
+                    phone: ''
+                });
+                setIsFormOpen(false);
+            }
         }
-
-        setFormData({
-            fullName: '',
-            email: '',
-            gender: '',
-            address: '',
-            phone: ''
-        });
-        setIsFormOpen(false);
     };
 
     const openForm = () => {
@@ -84,42 +96,44 @@ const MemberForm = ({ addMember, updateMember, editingMember, isFormOpen, setIsF
                 <InputField
                     label="Full Name"
                     type="text"
-                    required
                     ref={fullNameInputRef}
                     id="fullName"
                     value={formData.fullName}
                     onChange={handleInputChange}
                 />
+                {errors?.fullName ? <h6 className='text-start'>{errors.fullName}</h6> : ''}
                 <InputField
                     label="Email"
                     type="email"
-                    required
                     id="email"
                     value={formData.email}
                     onChange={handleInputChange}
                 />
-                <InputField
+                {errors?.email ? <h6 className='text-start'>{errors.email}</h6> : ''}
+                <LabeledTextArea
                     label="Address"
-                    type="text"
-                    required
                     id="address"
                     value={formData.address}
                     onChange={handleInputChange}
+                    placeholder="Enter your address"
                 />
+                {errors?.address ? <h6 className='text-start'>{errors.address}</h6> : ''}
                 <InputField
                     label="Phone Number"
                     type="text"
-                    required
+                    placeholder='+628xxxxxxx'
                     id="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
                 />
+                {errors?.phone ? <h6 style={{marginBottom:'50px'}} className='text-start'>{errors.phone}</h6> : ''}
                 <RadioGroup
                     options={options}
                     name="gender"
                     selectedValue={formData.gender}
                     onChange={handleInputChange}
                 />
+                {errors?.gender ? <h6 className='text-start'>{errors.gender}</h6> : ''}
                 <Button onClick={openForm} type="submit" className="btn btn-primary mt-3 w-100">
                     Submit
                 </Button>

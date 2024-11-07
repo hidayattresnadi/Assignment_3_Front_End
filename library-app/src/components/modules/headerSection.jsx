@@ -4,7 +4,7 @@ import GreetingMessage from '../widgets/greetingsMessage';
 import '../../header.css'
 import { useNavigate } from 'react-router-dom';
 
-const Header = () => {
+const Header = ({setEditingBook, setEditingMember, setErrors}) => {
   const navigate = useNavigate();
   const date = new Date();
   const fullDate = date.toLocaleDateString('en-EN', { day: '2-digit', month: 'long', year: 'numeric' });
@@ -22,12 +22,21 @@ const Header = () => {
         <div className="nav-links d-flex gap-4">
         <span onClick={() => {
             navigate(`/`)
+            setEditingBook(null)
+            setEditingMember(null)
+            setErrors(null)
           }} style={{ cursor: 'pointer' }} className="text-white fw-bold text-decoration-none fs-5">Home</span>
           <span onClick={() => {
             navigate(`/members`)
+            setEditingBook(null)
+            setEditingMember(null)
+            setErrors(null)
           }} style={{ cursor: 'pointer' }} className="text-white fw-bold text-decoration-none fs-5">Members</span>
           <span onClick={() => {
             navigate(`/books`)
+            setEditingBook(null)
+            setEditingMember(null)
+            setErrors(null)
           }} style={{ cursor: 'pointer' }} className="text-white fw-bold text-decoration-none fs-5">Books</span>
         </div>
       </div>

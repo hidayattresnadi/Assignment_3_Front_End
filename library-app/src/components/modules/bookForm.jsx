@@ -5,7 +5,7 @@ import Button from '../elements/button';
 import { useNavigate } from 'react-router-dom';
 import CheckboxGroup from '../widgets/checkboxGroup';
 
-const BookForm = ({ addBook, updateBook, editingBook, categories, isFormOpen, setIsFormOpen, errors }) => {
+const BookForm = ({ addBook, updateBook, editingBook, categories, isFormOpen, setIsFormOpen,errors }) => {
     const navigate = useNavigate();
     const titleInputRef = useRef();
     const [formData, setFormData] = useState({
@@ -75,26 +75,38 @@ const BookForm = ({ addBook, updateBook, editingBook, categories, isFormOpen, se
     });
 };
 
-    
     const handleSubmit = (e) => {
         e.preventDefault();
 
         if (editingBook) {
-            updateBook(formData);
-            navigate('/books')
+            const result = updateBook(formData);
+            if(Object.keys(result).length === 0){
+                navigate('/books')
+                setFormData({
+                    title: '',
+                    author: '',
+                    bookCategory: '',
+                    publicationYear: '',
+                    isbn: '',
+                    availability: []
+                });
+                setIsFormOpen(false);
+            }
+            
         } else {
-            addBook(formData);
+            const result = addBook(formData);
+            if(Object.keys(result).length === 0){
+                setFormData({
+                    title: '',
+                    author: '',
+                    bookCategory: '',
+                    publicationYear: '',
+                    isbn: '',
+                    availability: []
+                });
+                setIsFormOpen(false);
+            }
         }
-
-        setFormData({
-            title: '',
-            author: '',
-            bookCategory: '',
-            publicationYear: '',
-            isbn: '',
-            availability: []
-        });
-        setIsFormOpen(false);
     };
 
     const openForm = () => {
@@ -111,7 +123,6 @@ const BookForm = ({ addBook, updateBook, editingBook, categories, isFormOpen, se
                 <InputField
                     label="Title"
                     type="text"
-                    required
                     ref={titleInputRef}
                     id="title"
                     value={formData.title}
@@ -121,7 +132,6 @@ const BookForm = ({ addBook, updateBook, editingBook, categories, isFormOpen, se
                 <InputField
                     label="Author"
                     type="text"
-                    required
                     id="author"
                     value={formData.author}
                     onChange={(e) => handleInputChange(e,'author')}
@@ -132,7 +142,6 @@ const BookForm = ({ addBook, updateBook, editingBook, categories, isFormOpen, se
                     type="text"
                     placeholder="Example: 2023"
                     pattern="\d*"
-                    required
                     id="publicationYear"
                     value={formData.publicationYear}
                     onChange={(e) => handleInputChange(e,'publicationYear')}
@@ -141,7 +150,6 @@ const BookForm = ({ addBook, updateBook, editingBook, categories, isFormOpen, se
                 <InputField
                     label="ISBN"
                     type="text"
-                    required
                     id="isbn"
                     value={formData.isbn}
                     onChange={(e) => handleInputChange(e,'isbn')}
